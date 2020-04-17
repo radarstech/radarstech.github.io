@@ -1,358 +1,257 @@
-/*Theme Scripts */
+/*-----------------------------------------------------------------------------------
 
-(function($){ "use strict";
-             
-    $(window).on('load', function() {
-        $('body').addClass('loaded');
-    });
-             
-/*=========================================================================
-	Header
-=========================================================================*/
-    var primaryHeader = $('.primary-header'),
-        headerClone = primaryHeader.clone();
-    $('.header').after('<div class="sticky-header"></div>');
-    $('.sticky-header').html(headerClone);
-    var headerSelector = document.querySelector(".sticky-header");
-    var headroom = new Headroom(headerSelector, {
-        offset: 100
-    });
+  Template Name: Simply Construction HTML Template.
+  Template URI: #
+  Description: Simply Construction is a unique website template designed in HTML with a simple & beautiful look. There is an excellent solution for creating clean, wonderful and trending material design corporate, corporate any other purposes websites.
+  Author: DevItems
+  Version: 1.0
 
-    headroom.init();
+-----------------------------------------------------------------------------------*/
 
-    if ($('.primary-header').length) {
-        $('.header .primary-header .burger-menu').on("click", function () {
-            $(this).toggleClass('menu-open');
-            $('.header .header-menu-wrap').slideToggle(300);
-        });
-        $('.sticky-header .primary-header .burger-menu').on("click", function () {
-            $(this).toggleClass('menu-open');
-            $('.sticky-header .header-menu-wrap').slideToggle(300);
-        });
-    }
+/*-------------------------------
+[  Table of contents  ]
+---------------------------------
+  01. jQuery MeanMenu
+  02. wow js active
+  03. Project  Masonry
+  04. Sticky Header
+  05. ScrollUp
+  06. Testimonial Slick Carousel
+  07. Testimonial Slick Carousel
+  08. CounterUp
+  16. ScrollReveal Js Init
+  17. Magnific Popup
 
-    $('.header-menu-wrap ul li:has(ul)').each(function () {
-        $(this).append('<span class="dropdown-plus"></span>');
-        $(this).addClass('dropdown_menu');
-    });
 
-    $('.header-menu-wrap .dropdown-plus').on("click", function () {
-        $(this).prev('ul').slideToggle(300);
-        $(this).toggleClass('dropdown-open');
-    });
-    $('.header-menu-wrap .dropdown_menu a').append('<span></span>');
 
-    // Responsive Classes
-    function responsiveClasses() {
-        var body = $('body');
-        if ($(window).width() < 992) {
-            body.removeClass('viewport-lg');
-            body.addClass('viewport-sm');
-        } else {
-            body.removeClass('viewport-sm');
-            body.addClass('viewport-lg');
-        }
-    }
 
-    // Transparent Header
-    function transparentHeader(){
-        var header = $('.header.header-three'),
-            headerHeight = header.height(),
-            pageHeader = $('.page-header');
-            pageHeader.css('padding-top', headerHeight + 'px');
-    }
+/*--------------------------------
+[ End table content ]
+-----------------------------------*/
 
-    //responsiveClasses();
-    $(window).on("resize", function () {
-        responsiveClasses();
-        transparentHeader();
-    }).resize();
 
-    // Odometer JS
-    $('.odometer').waypoint(
-        function() {
-            var odo = $(".odometer");
-            odo.each(function() {
-                var countNumber = $(this).attr("data-count");
-                $(this).html(countNumber);
-            });
-        },
-        {
-            offset: "80%",
-            triggerOnce: true
-        }
-    );
+(function($) {
+    'use strict';
 
-/*=========================================================================
-	Main Slider
-=========================================================================*/ 
-    $(document).ready(function () {
 
-        $('#main-slider').on('init', function(e, slick) {
-            var $firstAnimatingElements = $('div.single-slide:first-child').find('[data-animation]');
-            doAnimations($firstAnimatingElements);    
-        });
-        $('#main-slider').on('beforeChange', function(e, slick, currentSlide, nextSlide) {
-                  var $animatingElements = $('div.single-slide[data-slick-index="' + nextSlide + '"]').find('[data-animation]');
-                  doAnimations($animatingElements);    
-        });
-        $('#main-slider').slick({
-           autoplay: true,
-           autoplaySpeed: 10000,
-           dots: true,
-           fade: true,
-           prevArrow: '<div class="slick-prev"><i class="fa fa-chevron-left"></i></div>',
-                nextArrow: '<div class="slick-next"><i class="fa fa-chevron-right"></i></div>'
-        });
-        function doAnimations(elements) {
-            var animationEndEvents = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
-            elements.each(function() {
-                var $this = $(this);
-                var $animationDelay = $this.data('delay');
-                var $animationType = 'animated ' + $this.data('animation');
-                $this.css({
-                    'animation-delay': $animationDelay,
-                    '-webkit-animation-delay': $animationDelay
-                });
-                $this.addClass($animationType).one(animationEndEvents, function() {
-                    $this.removeClass($animationType);
-                });
-            });
-        }
-    });
-             
-/*=========================================================================
-    Service Carousel
-=========================================================================*/
-    $('#service-carousel').owlCarousel({
-        loop: true,
-        margin: 0,
-        autoplay: false,
-        smartSpeed: 800,
-        nav: true,
-        navText: ['<i class="fa fa-caret-left"></i>', '<i class="fa fa-caret-right"></i>'],
-        dots: false,
-        responsive : {
-            0 : {
-                items: 1
-            },
-            480 : {
-                items: 1,
-            },
-            768 : {
-                items: 2,
-            },
-            992 : {
-                items: 4,
-            }
-        }
-    });
-
-/*=========================================================================
-    Projects Carousel
-=========================================================================*/
-    $('#projects-carousel').owlCarousel({
-        loop: true,
-        margin: 0,
-        autoplay: false,
-        smartSpeed: 500,
-        nav: true,
-        navText: ['<i class="fa fa-caret-left"></i>', '<i class="fa fa-caret-right"></i>'],
-        dots: false,
-        responsive : {
-            0 : {
-                items: 1
-            },
-            580 : {
-                items: 2,
-            },
-            768 : {
-                items: 2,
-            },
-            992 : {
-                items: 4,
-            }
-        }
-    });
-
-/*=========================================================================
-    Project Single Carousel
-=========================================================================*/
-    $('#project-single-carousel').owlCarousel({
-        loop: true,
-        margin: 5,
-        autoplay: true,
-        smartSpeed: 500,
-        nav: false,
-        navText: ['<i class="fa fa-caret-left"></i>', '<i class="fa fa-caret-right"></i>'],
-        dots: true,
-        responsive : {
-            0 : {
-                items: 1
-            },
-            480 : {
-                items: 1,
-            },
-            768 : {
-                items: 1,
-            },
-            992 : {
-                items: 1,
-            }
-        }
-    }); 
-
-/*=========================================================================
-    Testimonial Carousel
-=========================================================================*/
-    $('#testimonial-carousel').owlCarousel({
-        loop: true,
-        margin: 10,
-        center: false,
-        autoplay: true,
-        smartSpeed: 500,
-        nav: false,
-        navText: ['<i class="fa fa-caret-left"></i>', '<i class="fa fa-caret-right"></i>'],
-        dots: true,
-        responsive : {
-            0 : {
-                items: 1
-            },
-            480 : {
-                items: 1,
-            },
-            768 : {
-                items: 1,
-            },
-            992 : {
-                items: 2,
-            }
-        }
-    });
-
-/*=========================================================================
-    Sponsor Carousel
-=========================================================================*/
-    $('#sponsor-carousel').owlCarousel({
-        loop: true,
-        margin: 5,
-        center: false,
-        autoplay: true,
-        smartSpeed: 500,
-        nav: false,
-        navText: ['<i class="fa fa-caret-left"></i>', '<i class="fa fa-caret-right"></i>'],
-        dots: false,
-        responsive : {
-            0 : {
-                items: 2
-            },
-            480 : {
-                items: 3,
-            },
-            768 : {
-                items: 3,
-            },
-            992 : {
-                items: 6,
-            }
-        }
-    });
-             
-/*=========================================================================
-	Initialize smoothscroll plugin
-=========================================================================*/
-	smoothScroll.init({
-		offset: 60
-	});
-	 
-/*=========================================================================
-	Scroll To Top
-=========================================================================*/ 
-    $(window).on( 'scroll', function () {
-        if ($(this).scrollTop() > 100) {
-            $('#scroll-to-top').fadeIn();
-        } else {
-            $('#scroll-to-top').fadeOut();
-        }
-    });
-
-/*=========================================================================
-	WOW Active
-=========================================================================*/ 
-   new WOW().init();
-
-/*=========================================================================
-    Active venobox
-=========================================================================*/
-    $('.img-popup').venobox({
-        numeratio: true,
-        infinigall: true
-    });
-             
-/*=========================================================================
-	MAILCHIMP
-=========================================================================*/ 
-
-    if ($('.subscribe_form').length>0) {
-        /*  MAILCHIMP  */
-        $('.subscribe_form').ajaxChimp({
-            language: 'es',
-            callback: mailchimpCallback,
-            url: "//alexatheme.us14.list-manage.com/subscribe/post?u=48e55a88ece7641124b31a029&amp;id=361ec5b369" 
-        });
-    }
-
-    function mailchimpCallback(resp) {
-        if (resp.result === 'success') {
-            $('#subscribe-result').addClass('subs-result');
-            $('.subscription-success').text(resp.msg).fadeIn();
-            $('.subscription-error').fadeOut();
-
-        } else if(resp.result === 'error') {
-            $('#subscribe-result').addClass('subs-result');
-            $('.subscription-error').text(resp.msg).fadeIn();
-        }
-    }
-    $.ajaxChimp.translations.es = {
-        'submit': 'Submitting...',
-        0: 'We have sent you a confirmation email',
-        1: 'Please enter your email',
-        2: 'An email address must contain a single @',
-        3: 'The domain portion of the email address is invalid (the portion after the @: )',
-        4: 'The username portion of the email address is invalid (the portion before the @: )',
-        5: 'This email address looks fake or invalid. Please enter a real email address'
-    };
-
-/*=========================================================================
-    Google Map Settings
-=========================================================================*/
-    if($("body").hasClass("contact-page")){
-        google.maps.event.addDomListener(window, 'load', init);
-
-        function init() {
-
-            var mapOptions = {
-                zoom: 11,
-                center: new google.maps.LatLng(40.6700, -73.9400), 
-                scrollwheel: false,
-                navigationControl: false,
-                mapTypeControl: false,
-                scaleControl: false,
-                draggable: false,
-                styles: [{"featureType":"administrative","elementType":"all","stylers":[{"saturation":"-100"}]},{"featureType":"administrative.province","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"landscape","elementType":"all","stylers":[{"saturation":-100},{"lightness":65},{"visibility":"on"}]},{"featureType":"poi","elementType":"all","stylers":[{"saturation":-100},{"lightness":"50"},{"visibility":"simplified"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":"-100"}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"all","stylers":[{"lightness":"30"}]},{"featureType":"road.local","elementType":"all","stylers":[{"lightness":"40"}]},{"featureType":"transit","elementType":"all","stylers":[{"saturation":-100},{"visibility":"simplified"}]},{"featureType":"water","elementType":"geometry","stylers":[{"hue":"#ffff00"},{"lightness":-25},{"saturation":-97}]},{"featureType":"water","elementType":"labels","stylers":[{"lightness":-25},{"saturation":-100}]}]
-            };
-
-            var mapElement = document.getElementById('google-map');
-
-            var map = new google.maps.Map(mapElement, mapOptions);
-
-            var marker = new google.maps.Marker({
-                position: new google.maps.LatLng(40.6700, -73.9400),
-                map: map,
-                title: 'Location!'
-            });
-        }
-    }
+/*-------------------------------------------
+  01. jQuery MeanMenu
+--------------------------------------------- */
     
+$('.mobile-menu nav').meanmenu({
+    meanMenuContainer: '.mobile-menu-area',
+    meanScreenWidth: "991",
+    meanRevealPosition: "right",
+});
+/*-------------------------------------------
+  02. wow js active
+--------------------------------------------- */
+    new WOW().init();
+
+
+/*-------------------------------------------
+  03. Project  Masonry
+--------------------------------------------- */ 
+
+$('.htc__project__container').imagesLoaded( function() {
+  
+    // filter items on button click
+    $('.project__menu').on( 'click', 'button', function() {
+      var filterValue = $(this).attr('data-filter');
+      $grid.isotope({ filter: filterValue });
+    }); 
+    // init Isotope
+    var $grid = $('.htc__latest__project__wrap').isotope({
+      itemSelector: '.single__project',
+      percentPosition: true,
+      transitionDuration: '0.7s',
+      layoutMode: 'fitRows',
+      masonry: {
+        // use outer width of grid-sizer for columnWidth
+        columnWidth: '.single__project',
+      }
+    });
+
+});
+
+$('.project__menu button').on('click', function(event) {
+    $(this).siblings('.is-checked').removeClass('is-checked');
+    $(this).addClass('is-checked');
+    event.preventDefault();
+});
+
+
+
+/*-------------------------------------------
+  04. Sticky Header
+--------------------------------------------- */ 
+
+  $(window).on('scroll',function() {    
+    var scroll = $(window).scrollTop();
+    if (scroll < 245) {
+    $("#sticky-header-with-topbar").removeClass("scroll-header");
+    }else{
+    $("#sticky-header-with-topbar").addClass("scroll-header");
+    }
+  });
+
+
+/*--------------------------
+  05. ScrollUp
+---------------------------- */
+
+  $.scrollUp({
+    scrollText: '<i class="zmdi zmdi-chevron-up"></i>',
+    easingType: 'linear',
+    scrollSpeed: 900,
+    animation: 'fade'
+  });
+
+
+/*---------------------------------------------
+  06. Testimonial Slick Carousel
+------------------------------------------------*/
+  $('.testimonial__activation').slick({
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    arrows: false,
+    draggable: true,
+    // fade: true,
+    dots: true,
+  });
+
+
+/*------------------------------------------
+  07. Testimonial Slick Carousel
+-------------------------------------------*/
+  $('.testimonial__activation--2').slick({
+    slidesToShow: 2,
+    slidesToScroll: 2,
+    arrows: false,
+    draggable: true,
+    // fade: true,
+    dots: true,
+  });
+
+
+
+/*-----------------------------
+  08. CounterUp
+-----------------------------*/
+  $('.count').counterUp({
+    delay: 60,
+    time: 3000
+  });
+
+
+
+
+
+
+/*-----------------------------------------------
+  15. Home Slider
+-------------------------------------------------*/
+
+  if ($('.slider__activation__wrap').length) {
+    $('.slider__activation__wrap').owlCarousel({
+      loop: true,
+      margin:0,
+      nav:true,
+      autoplay: false,
+      navText: [ '<i class="zmdi zmdi-chevron-left"></i>', '<i class="zmdi zmdi-chevron-right"></i>' ],
+      autoplayTimeout: 10000,
+      items:1,
+      dots: false,
+      lazyLoad: true,
+      responsive:{
+        0:{
+          items:1
+        },
+        600:{
+          items:1
+        }
+      }
+    });
+  }
+
+
+
+/*-----------------------------------
+  16. ScrollReveal Js Init
+-------------------------------------- */
+
+  window.sr = ScrollReveal({ duration: 800 , reset: false });
+    sr.reveal('.foo');
+    sr.reveal('.bar');
+
+
+
+
+
+
+/*--------------------------------
+  17. Magnific Popup
+----------------------------------*/
+
+$('.video-popup').magnificPopup({
+  type: 'iframe',
+  mainClass: 'mfp-fade',
+  removalDelay: 160,
+  preloader: false,
+  zoom: {
+      enabled: true,
+  }
+});
+
+$('.image-popup').magnificPopup({
+  type: 'image',
+  mainClass: 'mfp-fade',
+  removalDelay: 100,
+  gallery:{
+      enabled:true, 
+  }
+});
+
+
+
+
+
+
+/*-----------------------------------------------
+  16. Blog Slider
+-------------------------------------------------*/
+
+  if ($('.blog__activation').length) {
+    $('.blog__activation').owlCarousel({
+      loop: true,
+      margin:0,
+      nav:true,
+      autoplay: false,
+      navText: [ '<i class="zmdi zmdi-chevron-left"></i>', '<i class="zmdi zmdi-chevron-right"></i>' ],
+      autoplayTimeout: 10000,
+      items:1,
+      dots: false,
+      lazyLoad: true,
+      responsive:{
+        0:{
+          items:1
+        },
+        600:{
+          items:1
+        }
+      }
+    });
+  }
+
+
+
+
+
+
+
 
 })(jQuery);
+
+
+
+
