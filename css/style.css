@@ -828,8 +828,8 @@ ol {
 
 .footer-section {
 	background: #191919;
-	padding-top: 80px;
-	padding-bottom: 50px;
+	padding-top: 8px;
+	padding-bottom: 5px;
 }
 
 .footer-option {
@@ -954,7 +954,7 @@ ol {
 }
 
 .copyright-text {
-	padding-top: 25px;
+	padding-top: 5px;
 	color: #b3b3b3;
 	text-align: center;
 	font-size: 14px;
