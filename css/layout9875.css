@@ -15,7 +15,7 @@ img {
   padding-top: 3px;
 }
 .masonry {
-  margin: 10px;
+  margin: 5px;
 }
 .masonry > div {
   display: flex;
