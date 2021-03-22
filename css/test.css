@@ -71,7 +71,7 @@ transform: translateY(0) rotateX(0);
 }
 .testdrop.btn-flip.btn-num-in:after{
 	content: "\f16d";
-	background-color: #3f729b;
+	background-color: #dd2a7b;
 }
 .testdrop.btn-flip.btn-num-tw:after{
 	content: "\f099";
